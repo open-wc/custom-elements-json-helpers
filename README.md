@@ -29,14 +29,364 @@ Returns all information for element `<foo-bar>`.
 customElementsJson.getByTagName('foo-bar');
 ```
 
+<details>
+
+<summary><code>custom-elements.json</code></summary>
+
+```json
+{
+  "version": "experimental",
+  "modules": [
+    {
+      "path": "./src/MyMixinB.js",
+      "exports": [
+        {
+          "kind": "variable",
+          "name": "MyMixinB",
+          "type": "(klass: any) => typeof MyMixinB"
+        }
+      ]
+    },
+    {
+      "path": "./src/MySuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MySuperClass",
+          "mixins": [
+            {
+              "name": "MyMixinB",
+              "module": "./src/MyMixinB.js"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/AnotherSuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "MySuperClass",
+            "module": "./src/MySuperClass.js"
+          },
+          "name": "AnotherSuperClass",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\""
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/my-element.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "my-element",
+          "declaration": {
+            "name": "MyElement",
+            "module": "./src/my-element.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MyElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "foo",
+              "type": "string",
+              "default": "\"bar\""
+            }
+          ],
+          "tagName": "my-element"
+        }
+      ]
+    },
+    {
+      "path": "./src/another-component.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "another-component",
+          "declaration": {
+            "name": "AnotherComponent",
+            "module": "./src/another-component.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "AnotherSuperClass",
+            "module": "./src/AnotherSuperClass.js"
+          },
+          "name": "AnotherComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "baz",
+              "type": "string",
+              "default": "\"bar\""
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\"",
+              "inheritedFrom": {
+                "name": "AnotherSuperClass",
+                "module": "./src/AnotherSuperClass.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ],
+          "tagName": "another-component"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Result</summary>
+
+```js
+{
+  kind: 'class',
+  superclass: { name: 'HTMLElement' },
+  name: 'MyElement',
+  members: [ { kind: 'field', name: 'foo', type: 'string', default: '"bar"' } ],
+  tagName: 'my-element'
+}
+```
+
+</details>
+
 <hr>
 
-#### `getByClass`
+#### `getByClassName`
 
 Returns all information for class `MyElement`.
 ```js
-customElementsJson.getByClass('MyElement');
+customElementsJson.getByClassName('MyElement');
 ```
+
+<details>
+
+<summary><code>custom-elements.json</code></summary>
+
+```json
+{
+  "version": "experimental",
+  "modules": [
+    {
+      "path": "./src/MyMixinB.js",
+      "exports": [
+        {
+          "kind": "variable",
+          "name": "MyMixinB",
+          "type": "(klass: any) => typeof MyMixinB"
+        }
+      ]
+    },
+    {
+      "path": "./src/MySuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MySuperClass",
+          "mixins": [
+            {
+              "name": "MyMixinB",
+              "module": "./src/MyMixinB.js"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/AnotherSuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "MySuperClass",
+            "module": "./src/MySuperClass.js"
+          },
+          "name": "AnotherSuperClass",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\""
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/my-element.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "my-element",
+          "declaration": {
+            "name": "MyElement",
+            "module": "./src/my-element.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MyElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "foo",
+              "type": "string",
+              "default": "\"bar\""
+            }
+          ],
+          "tagName": "my-element"
+        }
+      ]
+    },
+    {
+      "path": "./src/another-component.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "another-component",
+          "declaration": {
+            "name": "AnotherComponent",
+            "module": "./src/another-component.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "AnotherSuperClass",
+            "module": "./src/AnotherSuperClass.js"
+          },
+          "name": "AnotherComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "baz",
+              "type": "string",
+              "default": "\"bar\""
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\"",
+              "inheritedFrom": {
+                "name": "AnotherSuperClass",
+                "module": "./src/AnotherSuperClass.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ],
+          "tagName": "another-component"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Result</summary>
+
+```js
+{
+  kind: 'class',
+  superclass: { name: 'HTMLElement' },
+  name: 'MyElement',
+  members: [ { kind: 'field', name: 'foo', type: 'string', default: '"bar"' } ],
+  tagName: 'my-element'
+}
+```
+
+</details>
 
 <hr>
 
@@ -47,6 +397,203 @@ Returns all classes in a `custom-elements.json`
 customElementsJson.getClasses();
 ```
 
+<details>
+
+<summary><code>custom-elements.json</code></summary>
+
+```json
+{
+  "version": "experimental",
+  "modules": [
+    {
+      "path": "./src/MyMixinB.js",
+      "exports": [
+        {
+          "kind": "variable",
+          "name": "MyMixinB",
+          "type": "(klass: any) => typeof MyMixinB"
+        }
+      ]
+    },
+    {
+      "path": "./src/MySuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MySuperClass",
+          "mixins": [
+            {
+              "name": "MyMixinB",
+              "module": "./src/MyMixinB.js"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/AnotherSuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "MySuperClass",
+            "module": "./src/MySuperClass.js"
+          },
+          "name": "AnotherSuperClass",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\""
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/my-element.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "my-element",
+          "declaration": {
+            "name": "MyElement",
+            "module": "./src/my-element.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MyElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "foo",
+              "type": "string",
+              "default": "\"bar\""
+            }
+          ],
+          "tagName": "my-element"
+        }
+      ]
+    },
+    {
+      "path": "./src/another-component.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "another-component",
+          "declaration": {
+            "name": "AnotherComponent",
+            "module": "./src/another-component.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "AnotherSuperClass",
+            "module": "./src/AnotherSuperClass.js"
+          },
+          "name": "AnotherComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "baz",
+              "type": "string",
+              "default": "\"bar\""
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\"",
+              "inheritedFrom": {
+                "name": "AnotherSuperClass",
+                "module": "./src/AnotherSuperClass.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ],
+          "tagName": "another-component"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Result</summary>
+
+```js
+[
+  {
+    kind: 'class',
+    superclass: { name: 'HTMLElement' },
+    name: 'MySuperClass',
+    mixins: [ [Object] ],
+    members: [ [Object] ]
+  },
+  {
+    kind: 'class',
+    superclass: { name: 'MySuperClass', module: './src/MySuperClass.js' },
+    name: 'AnotherSuperClass',
+    members: [ [Object], [Object] ]
+  },
+  {
+    kind: 'class',
+    superclass: { name: 'HTMLElement' },
+    name: 'MyElement',
+    members: [ [Object] ],
+    tagName: 'my-element'
+  },
+  {
+    kind: 'class',
+    superclass: { name: 'AnotherSuperClass', module: './src/AnotherSuperClass.js' },
+    name: 'AnotherComponent',
+    members: [ [Object], [Object], [Object] ],
+    tagName: 'another-component'
+  }
+]
+```
+
+</details>
+
 <hr>
 
 #### `getMixins`
@@ -56,6 +603,182 @@ Returns all mixins in a `custom-elements.json`
 customElementsJson.getMixins();
 ```
 
+<details>
+
+<summary><code>custom-elements.json</code></summary>
+
+```json
+{
+  "version": "experimental",
+  "modules": [
+    {
+      "path": "./src/MyMixinB.js",
+      "exports": [
+        {
+          "kind": "variable",
+          "name": "MyMixinB",
+          "type": "(klass: any) => typeof MyMixinB"
+        }
+      ]
+    },
+    {
+      "path": "./src/MySuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MySuperClass",
+          "mixins": [
+            {
+              "name": "MyMixinB",
+              "module": "./src/MyMixinB.js"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/AnotherSuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "MySuperClass",
+            "module": "./src/MySuperClass.js"
+          },
+          "name": "AnotherSuperClass",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\""
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/my-element.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "my-element",
+          "declaration": {
+            "name": "MyElement",
+            "module": "./src/my-element.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MyElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "foo",
+              "type": "string",
+              "default": "\"bar\""
+            }
+          ],
+          "tagName": "my-element"
+        }
+      ]
+    },
+    {
+      "path": "./src/another-component.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "another-component",
+          "declaration": {
+            "name": "AnotherComponent",
+            "module": "./src/another-component.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "AnotherSuperClass",
+            "module": "./src/AnotherSuperClass.js"
+          },
+          "name": "AnotherComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "baz",
+              "type": "string",
+              "default": "\"bar\""
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\"",
+              "inheritedFrom": {
+                "name": "AnotherSuperClass",
+                "module": "./src/AnotherSuperClass.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ],
+          "tagName": "another-component"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Result</summary>
+
+```js
+[
+  {
+    name: 'MyMixinB',
+    module: './src/MyMixinB.js',
+    kind: 'variable',
+    type: '(klass: any) => typeof MyMixinB'
+  }
+]
+```
+
+</details>
+
 <hr>
 
 #### `getDefinitions`
@@ -64,6 +787,186 @@ Returns all custom element definitions in a `custom-elements.json`
 ```js
 customElementsJson.getDefinitions();
 ```
+
+<details>
+
+<summary><code>custom-elements.json</code></summary>
+
+```json
+{
+  "version": "experimental",
+  "modules": [
+    {
+      "path": "./src/MyMixinB.js",
+      "exports": [
+        {
+          "kind": "variable",
+          "name": "MyMixinB",
+          "type": "(klass: any) => typeof MyMixinB"
+        }
+      ]
+    },
+    {
+      "path": "./src/MySuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MySuperClass",
+          "mixins": [
+            {
+              "name": "MyMixinB",
+              "module": "./src/MyMixinB.js"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/AnotherSuperClass.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "MySuperClass",
+            "module": "./src/MySuperClass.js"
+          },
+          "name": "AnotherSuperClass",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\""
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "./src/my-element.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "my-element",
+          "declaration": {
+            "name": "MyElement",
+            "module": "./src/my-element.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "MyElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "foo",
+              "type": "string",
+              "default": "\"bar\""
+            }
+          ],
+          "tagName": "my-element"
+        }
+      ]
+    },
+    {
+      "path": "./src/another-component.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "another-component",
+          "declaration": {
+            "name": "AnotherComponent",
+            "module": "./src/another-component.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "AnotherSuperClass",
+            "module": "./src/AnotherSuperClass.js"
+          },
+          "name": "AnotherComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "baz",
+              "type": "string",
+              "default": "\"bar\""
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": "string",
+              "default": "\"d\"",
+              "inheritedFrom": {
+                "name": "AnotherSuperClass",
+                "module": "./src/AnotherSuperClass.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": "string",
+              "default": "\"b\"",
+              "inheritedFrom": {
+                "name": "MySuperClass",
+                "module": "./src/MySuperClass.js"
+              }
+            }
+          ],
+          "tagName": "another-component"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Result</summary>
+
+```js
+[
+  {
+    kind: 'definition',
+    name: 'my-element',
+    declaration: { name: 'MyElement', module: './src/my-element.js' }
+  },
+  {
+    kind: 'definition',
+    name: 'another-component',
+    declaration: { name: 'AnotherComponent', module: './src/another-component.js' }
+  }
+]
+```
+
+</details>
 
 <hr>
 
