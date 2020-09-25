@@ -94,6 +94,7 @@ export interface AttributeDoc {
    * The name of the field this attribute is associated with, if any.
    */
   fieldName?: string;
+  inheritedFrom?: Reference;
 }
 
 export interface EventDoc {
@@ -117,6 +118,7 @@ export interface EventDoc {
    * If the event is a CustomEvent, the type of `detail` field.
    */
   detailType?: string;
+  inheritedFrom?: Reference;
 }
 
 export interface SlotDoc {
@@ -171,12 +173,14 @@ export interface FieldDoc {
   description?: string;
   privacy?: Privacy;
   type?: string;
+  inheritedFrom?: Reference;
 }
 
 export interface MethodDoc extends FunctionLike {
   kind: 'method';
 
   static?: boolean;
+  inheritedFrom?: Reference;
 }
 
 /**
