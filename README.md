@@ -20,8 +20,11 @@ npm test
 
 ## Usecases
 
-- Get all information for a given class (this should include the information of any superclasses or mixins)
-- Get all information for a given tagName (this should include the information of any superclasses or mixins)
+- [x] Get all information for a given class (this should include the information of any superclasses or mixins)
+- [x] Get all information for a given tagName (this should include the information of any superclasses or mixins)
+- [x] Get all mixins
+- [x] Get all classes
+- [x] Get all definitions
 - Get attributes for a given class or tagName
 - Get properties for a given class or tagName
 - Get cssProperties for a given class or tagName
