@@ -24,9 +24,9 @@ const customElementsJson = new CustomElementsJson(json);
 
 #### `getByTagName`
 
-Returns all information for element `<foo-bar>`.
+Returns all information for element `<my-element>`.
 ```js
-customElementsJson.getByTagName('foo-bar');
+customElementsJson.getByTagName('my-element');
 ```
 
 <details>
