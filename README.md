@@ -1,6 +1,6 @@
 # @custom-elements-json/helpers
 
-> ⚠️ Experimental
+> ⚠️ Very experimental and very unfinished
 
 ## Usage
 
@@ -12,7 +12,7 @@ const json = require('./custom-elements.json');
 const customElementsJson = new CustomElementsJson(json);
 
 // Browser
-import { CustomElementsJson } from '@custom-elements-json/helpers';
+import { CustomElementsJson } from 'https://unpkg.com/@custom-elements-json/helpers';
 
 const json = await (await fetch('./custom-elements.json')).json();
 const customElementsJson = new CustomElementsJson(json);
@@ -22,33 +22,49 @@ const customElementsJson = new CustomElementsJson(json);
 
 <hr>
 
+#### `getByTagName`
+
 Returns all information for element `<foo-bar>`.
 ```js
 customElementsJson.getByTagName('foo-bar');
 ```
+
 <hr>
+
+#### `getByClass`
+
 Returns all information for class `MyElement`.
 ```js
 customElementsJson.getByClass('MyElement');
 ```
+
 <hr>
+
+#### `getClasses`
 
 Returns all classes in a `custom-elements.json`
 ```js
 customElementsJson.getClasses();
 ```
+
 <hr>
+
+#### `getMixins`
 
 Returns all mixins in a `custom-elements.json`
 ```js
 customElementsJson.getMixins();
 ```
+
 <hr>
+
+#### `getDefinitions`
 
 Returns all custom element definitions in a `custom-elements.json`
 ```js
-customElementsJson.getMixins();
+customElementsJson.getDefinitions();
 ```
+
 <hr>
 
 ## Helper functions
@@ -120,14 +136,17 @@ npm test
 
 ## Usecases
 
-- Get all information for a given class (this should include the information of any superclasses or mixins)
-- Get all information for a given tagName (this should include the information of any superclasses or mixins)
-- Get attributes for a given class or tagName
-- Get properties for a given class or tagName
-- Get cssProperties for a given class or tagName
-- Get cssParts for a given class or tagName
-- Get events for a given class or tagName
-- Get slots for a given class or tagName
+- [x] Get all information for a given class (this should include the information of any superclasses or mixins)
+- [x] Get all information for a given tagName (this should include the information of any superclasses or mixins)
+- [x] Get all mixins
+- [x] Get all classes
+- [x] Get all definitions
+- [ ] Get attributes for a given class or tagName
+- [ ] Get properties for a given class or tagName
+- [ ] Get cssProperties for a given class or tagName
+- [ ] Get cssParts for a given class or tagName
+- [ ] Get events for a given class or tagName
+- [ ] Get slots for a given class or tagName
 - more? What sort of things would be helpful? Create an issue if you have any ideas
 
 ## Goals
