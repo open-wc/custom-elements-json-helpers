@@ -95,8 +95,4 @@ export class CustomElementsJson {
   }
 }
 
-const customElementsJson = new CustomElementsJson(require('../fixtures/demo.json'));
-console.log(customElementsJson.getDefinitions());
-
-
 export * from './helpers';
