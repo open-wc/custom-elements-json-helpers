@@ -46,6 +46,4 @@ export class CustomElementsJson {
   }
 }
 
-const customElementsJson = new CustomElementsJson(require('../fixtures/many_classes_and_superclasses.json'));
-console.log(customElementsJson.getByTagName('c-c'));
-console.log(customElementsJson.getByClassName('C'));
+export * from './helpers';
