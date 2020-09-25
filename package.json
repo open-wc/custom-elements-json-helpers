@@ -13,8 +13,9 @@
     "url": "https://github.com/open-wc/custom-elements-json-helpers"
   },
   "main": "dist/index.js",
+  "module": "index.mjs",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc && tsc -p tsconfig.browser.json",
     "format:prettier": "node node_modules/prettier/bin-prettier.js \"**/*.{ts,js,mjs,cjs,md}\" \"**/package.json\" --write --ignore-path .eslintignore",
     "lint:eslint": "eslint --ext .ts,.js,.mjs,.cjs .",
     "start": "nodemon dist/index.js",

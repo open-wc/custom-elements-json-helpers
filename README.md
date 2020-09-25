@@ -8,11 +8,11 @@
 // Node
 import { CustomElementsJson } from '@custom-elements-json/helpers';
 
-const json = require('./custom-elements.json');
+const foo = JSON.parse(fs.readFileSync('./custom-elements.json', 'utf-8'))
 const customElementsJson = new CustomElementsJson(json);
 
 // Browser
-import { CustomElementsJson } from 'https://unpkg.com/@custom-elements-json/helpers';
+import { CustomElementsJson } from 'https://unpkg.com/@custom-elements-json/helpers/dist/esm/index.js';
 
 const json = await (await fetch('./custom-elements.json')).json();
 const customElementsJson = new CustomElementsJson(json);

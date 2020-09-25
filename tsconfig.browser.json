@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "outDir": "./dist",
+    "module": "es2020",
+    "outDir": "./dist/esm",
     "rootDir": "./src",
     "composite": true,
     "allowJs": true,
@@ -28,9 +28,10 @@
     ]
   },
   "include": [
-    "./src/*"
+    "src"
   ],
   "exclude": [
-    "./index.mjs"
+    "dist",
+    "demo"
   ]
 }
