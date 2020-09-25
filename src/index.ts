@@ -1,5 +1,6 @@
-import { PackageDoc, ModuleDoc, DefinitionDoc, ExportDoc, ClassDoc, CustomElementDoc } from './CustomElementsJson';
+import { PackageDoc, ModuleDoc, DefinitionDoc, ExportDoc, ClassDoc, CustomElementDoc, VariableDoc, Reference } from './CustomElementsJson';
 import * as h from './helpers';
+
 
 export class CustomElementsJson {
   public json: PackageDoc;
@@ -44,8 +45,60 @@ export class CustomElementsJson {
   getByClassName(className: string): CustomElementDoc {
     return this.classes.get(className);
   }
+
+  getClasses(){
+    const classes: ClassDoc[] = [];
+    this.loopAllExports((_export) => {
+      if (h.isClass(_export)) {
+        classes.push(_export as ClassDoc);
+      }
+    });
+    return classes;
+  }
+
+  getMixins(){
+    let foundMixins = new Map();
+
+    let _mixins: Reference[] = [];
+    this.loopAllExports((_export) => {
+      if (h.hasMixins(_export as CustomElementDoc)) {
+        const { mixins } = _export as CustomElementDoc;
+
+        [...<Reference[]>mixins].forEach((mixin) => {
+          foundMixins.set(mixin.name, mixin);
+        });
+      }
+    });
+
+    this.loopAllExports((_export) => {
+      if (h.isVariable(_export as VariableDoc)) {
+        const mergedMixin = {
+          ...foundMixins.get(_export.name),
+          ..._export
+        };
+
+        _mixins.push(mergedMixin);
+      }
+    });
+
+    return [...new Set([..._mixins])];
+  }
+
+  getDefinitions(){
+    const definitions: DefinitionDoc[] = [];
+    this.loopAllExports((_export) => {
+      if (h.isDefinition(_export)) {
+        definitions.push(_export as DefinitionDoc);
+      }
+    });
+    return definitions;
+  }
 }
 
-const customElementsJson = new CustomElementsJson(require('../fixtures/many_classes_and_superclasses.json'));
-console.log(customElementsJson.getByTagName('c-c'));
-console.log(customElementsJson.getByClassName('C'));
+// const customElementsJson = new CustomElementsJson(require('../fixtures/many_classes_and_superclasses.json'));
+const customElementsJson = new CustomElementsJson(require('../fixtures/multiple_mixins.json'));
+// console.log(customElementsJson.getByTagName('c-c'));
+// console.log(customElementsJson.getByClassName('C'));
+// console.log(customElementsJson.getMixins());
+
+export * from './helpers';
