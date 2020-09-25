@@ -31,9 +31,9 @@ export interface ModuleDoc {
   exports?: Array<ExportDoc>;
 }
 
-export type ExportDoc = ClassDoc | FunctionDoc | VariableDoc | DefinitionDoc;
+export type ExportDoc = ClassDoc | FunctionDoc | VariableDoc | CustomElementDefinitionDoc;
 
-export interface DefinitionDoc {
+export interface CustomElementDefinitionDoc {
   kind: string;
   name: string;
   declaration: Reference;

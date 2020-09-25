@@ -1,4 +1,4 @@
-import { PackageDoc, ModuleDoc, DefinitionDoc, ExportDoc, ClassDoc, CustomElementDoc, VariableDoc, Reference } from './CustomElementsJson';
+import { PackageDoc, ModuleDoc, CustomElementDefinitionDoc, ExportDoc, ClassDoc, CustomElementDoc, VariableDoc, Reference } from './CustomElementsJson';
 import * as h from './helpers';
 
 
@@ -32,7 +32,7 @@ export class CustomElementsJson {
 
     this.loopAllExports((_export) => {
       if (h.isDefinition(_export)) {
-        const definition = _export as DefinitionDoc;
+        const definition = _export as CustomElementDefinitionDoc;
         this.tagNames.set(definition.name, this.classes.get(definition.declaration.name));
       }
     });
@@ -85,10 +85,10 @@ export class CustomElementsJson {
   }
 
   getDefinitions(){
-    const definitions: DefinitionDoc[] = [];
+    const definitions: CustomElementDefinitionDoc[] = [];
     this.loopAllExports((_export) => {
       if (h.isDefinition(_export)) {
-        definitions.push(_export as DefinitionDoc);
+        definitions.push(_export as CustomElementDefinitionDoc);
       }
     });
     return definitions;
