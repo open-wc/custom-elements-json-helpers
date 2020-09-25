@@ -15,10 +15,6 @@ export function isClass(_export: ExportDoc): boolean {
   return _export.kind === 'class';
 }
 
-export function isMixin(_export: ExportDoc): boolean {
-  return _export.kind === 'mixin';
-}
-
 export function isFunction(_export: ExportDoc): boolean {
   return _export.kind === 'function';
 }

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "outDir": "dist",
+    "rootDir": "src",
     "composite": true,
     "allowJs": true,
     "target": "ES2017",
@@ -28,9 +28,9 @@
     ]
   },
   "include": [
-    "./src/*"
+    "src"
   ],
   "exclude": [
-    "./index.mjs"
+    "./index.mjs",
   ]
 }

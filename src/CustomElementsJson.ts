@@ -34,8 +34,10 @@ export interface ModuleDoc {
 export type ExportDoc = ClassDoc | FunctionDoc | VariableDoc | CustomElementDefinitionDoc;
 
 export interface CustomElementDefinitionDoc {
-  kind: string;
+  kind: 'definition';
+  /** Custom-element name */
   name: string;
+  /** Reference to the class this custom element is registered with, and its module */
   declaration: Reference;
 }
 
@@ -43,7 +45,7 @@ export interface CustomElementDefinitionDoc {
  * A reference to an export of a module.
  *
  * All references are required to be publically accessible, so the canonical
- * representation of a refernce it the export it's available from.
+ * representation of a reference is the export it's available from.
  */
 export interface Reference {
   name: string;
@@ -51,8 +53,35 @@ export interface Reference {
   module?: string;
 }
 
+/**
+ * Description of a custom element class.
+ *
+ * Custom elements are JavaScript classes, so this extends from `ClassDoc` and
+ * adds custom-element-specific features like attributes, events, and slots.
+ *
+ * Note that `tagName` in this interface is optional. Tag names are not
+ * neccessarily part of a custom element class, but belong to the definition
+ * (often called the "registration") or the `customElements.define()` call.
+ *
+ * Because classes and tag anmes can only be registered once, there's a
+ * one-to-one relationship between classes and tag names. For ease of use,
+ * we allow the tag name here.
+ *
+ * Some packages define and register custom elements in separate modules. In
+ * these cases one `ModuleDoc` should contain the `CustomElementDoc` without a
+ * tagName, and another `ModuleDoc` should contain the
+ * `CustomElementDefintionDoc`.
+ */
 export interface CustomElementDoc extends ClassDoc {
-  tagName: string;
+  /**
+   * An optional tag name that should be specified if this is a
+   * self-registering element.
+   *
+   * Self-registering elements must also include a CustomElementDefintionDoc
+   * in the module's exports.
+   */
+  tagName?: string;
+
   /**
    * The attributes that this element is known to understand.
    */
@@ -94,7 +123,6 @@ export interface AttributeDoc {
    * The name of the field this attribute is associated with, if any.
    */
   fieldName?: string;
-  inheritedFrom?: Reference;
 }
 
 export interface EventDoc {
@@ -112,13 +140,12 @@ export interface EventDoc {
    * `CustomEvent`, `KeyboardEvent`. If the event type is an event class defined
    * in a module, the reference to it.
    */
-  type: Reference | string;
+  type: Reference|string;
 
   /**
    * If the event is a CustomEvent, the type of `detail` field.
    */
   detailType?: string;
-  inheritedFrom?: Reference;
 }
 
 export interface SlotDoc {
@@ -128,7 +155,33 @@ export interface SlotDoc {
   name: string;
 
   /**
-   * A markdown description of the slot.
+   * A markdown description of the part.
+   */
+  description?: string;
+}
+
+/**
+ * The description of a CSS Part
+ */
+export interface CssPartDoc {
+  name: string;
+
+  /**
+   * A markdown description for the CSS property.
+   */
+  description?: string;
+}
+
+export interface CssCustomPropertyDoc {
+  /**
+   * The name of the property, including leading `--`.
+   */
+  name: string;
+
+  defaultValue?: string;
+
+  /**
+   * A markdown description for the attribute.
    */
   description?: string;
 }
@@ -153,7 +206,7 @@ export interface ClassDoc {
   members?: Array<ClassMember>;
 }
 
-export type ClassMember = FieldDoc | MethodDoc;
+export type ClassMember = FieldDoc|MethodDoc;
 
 export interface FieldDoc {
   kind: 'field';
@@ -173,14 +226,12 @@ export interface FieldDoc {
   description?: string;
   privacy?: Privacy;
   type?: string;
-  inheritedFrom?: Reference;
 }
 
 export interface MethodDoc extends FunctionLike {
   kind: 'method';
 
   static?: boolean;
-  inheritedFrom?: Reference;
 }
 
 /**
@@ -226,21 +277,21 @@ export interface FunctionLike {
   description?: string;
 
   parameters?: {
-    name: string;
-    type?: string;
-    description?: string;
+    name: string,
+    type?: string,
+    description?: string,
   }[];
 
   return?: {
-    type?: string;
-    description?: string;
+    type?: string,
+    description?: string,
   };
 
   privacy?: Privacy;
   type?: string;
 }
 
-export type Privacy = 'public' | 'private' | 'protected';
+export type Privacy = 'public'|'private'|'protected';
 
 export interface Demo {
   /**

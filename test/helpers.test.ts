@@ -34,7 +34,7 @@ describe('helpers', () => {
 
   describe('ModuleDoc', () => {
     describe('hasExports', () => {
-      const fixture: ModuleDoc = {path: '', exports: [{kind: '', name: '', declaration: {name:''}}]};
+      const fixture: ModuleDoc = {path: '', exports: [{kind: 'class', name: ''}]};
 
       it('hasExports - true', () => {
         expect(hasExports(fixture)).to.equal(true);

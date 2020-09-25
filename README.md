@@ -1004,7 +1004,6 @@ if (h.hasModules(json)) {
 
 ### Export
 - `isClass(export: ExportDoc) => boolean`
-- `isMixin(export: ExportDoc) => boolean`
 - `isFunction(export: ExportDoc) => boolean`
 - `isVariable(export: ExportDoc) => boolean`
 - `isDefinition(export: ExportDoc) => boolean`
