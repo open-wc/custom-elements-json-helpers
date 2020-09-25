@@ -102,7 +102,7 @@ export interface EventDoc {
   /**
    * A markdown description of the event.
    */
-  description: string;
+  description?: string;
 
   /**
    * The type of the event object that's fired.
