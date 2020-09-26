@@ -970,6 +970,147 @@ customElementsJson.getDefinitions();
 
 <hr>
 
+#### `getInheritanceTree`
+
+Returns inheritance for class `MyComponent`.
+```js
+customElementsJson.getInheritanceTree('MyComponent');
+```
+
+<details>
+
+<summary><code>custom-elements.json</code></summary>
+
+```json
+{
+  "version": "experimental",
+  "modules": [
+    {
+      "path": "./dev/src/custom-element/LitElement.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "UpdatingElement",
+            "module": "./dev/src/custom-element/UpdatingElement.js"
+          },
+          "name": "LitElement"
+        }
+      ]
+    },
+    {
+      "path": "./dev/src/custom-element/MyComponent.js",
+      "exports": [
+        {
+          "kind": "definition",
+          "name": "my-component",
+          "declaration": {
+            "name": "LitElement",
+            "module": "./dev/src/custom-element/LitElement.js"
+          }
+        },
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "LitElement",
+            "module": "./dev/src/custom-element/LitElement.js"
+          },
+          "mixins": [
+            {
+              "name": "TabindexMixin",
+              "module": "./dev/src/custom-element/MyComponent.js"
+            },
+            {
+              "name": "LocalizeMixin",
+              "module": "./dev/src/custom-element/MyComponent.js"
+            }
+          ],
+          "name": "MyComponent"
+        },
+        {
+          "kind": "class",
+          "name": "TabindexMixin"
+        },
+        {
+          "kind": "class",
+          "name": "LocalizeMixin"
+        },
+        {
+          "kind": "variable",
+          "name": "LocalizeMixin",
+          "type": "(klass: any) => typeof LocalizeMixin"
+        },
+        {
+          "kind": "variable",
+          "name": "TabindexMixin",
+          "type": "(klass: any) => typeof TabindexMixin"
+        }
+      ]
+    },
+    {
+      "path": "./dev/src/custom-element/UpdatingElement.js",
+      "exports": [
+        {
+          "kind": "class",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "name": "UpdatingElement"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Result</summary>
+
+```js
+[
+  {
+    kind: 'class',
+    superclass: {
+      name: 'LitElement',
+      module: './dev/src/custom-element/LitElement.js'
+    },
+    mixins: [ [Object], [Object] ],
+    name: 'MyComponent'
+  },
+  {
+    name: 'TabindexMixin',
+    module: './dev/src/custom-element/MyComponent.js',
+    kind: 'variable',
+    type: '(klass: any) => typeof TabindexMixin'
+  },
+  {
+    name: 'LocalizeMixin',
+    module: './dev/src/custom-element/MyComponent.js',
+    kind: 'variable',
+    type: '(klass: any) => typeof LocalizeMixin'
+  },
+  {
+    kind: 'class',
+    superclass: {
+      name: 'UpdatingElement',
+      module: './dev/src/custom-element/UpdatingElement.js'
+    },
+    name: 'LitElement'
+  },
+  {
+    kind: 'class',
+    superclass: { name: 'HTMLElement' },
+    name: 'UpdatingElement'
+  }
+]
+```
+
+</details>
+
+<hr>
+
 ## Helper functions
 
 Additionally the following helper functions are available. These functions can help you when developing custom tooling for `custom-elements.json`, and make your code more declarative.

@@ -6,6 +6,7 @@ export class CustomElementsJson {
   public json: PackageDoc;
   private classes = new Map();
   private tagNames = new Map();
+  private mixins = new Map();
 
   constructor(customElementsJson: PackageDoc) {
     this.json = customElementsJson;
@@ -22,14 +23,16 @@ export class CustomElementsJson {
     });
   }
 
-  private init() {
+  private initClasses() {
     this.loopAllExports((_export) => {
       if (h.isClass(_export)) {
         const klass = _export as ClassDoc;
         this.classes.set(klass.name, klass);
       }
     });
+  }
 
+  private initDefinitions() {
     this.loopAllExports((_export) => {
       if (h.isDefinition(_export)) {
         const definition = _export as CustomElementDefinitionDoc;
@@ -38,25 +41,7 @@ export class CustomElementsJson {
     });
   }
 
-  getByTagName(tagName: string): CustomElementDoc {
-    return this.tagNames.get(tagName);
-  }
-
-  getByClassName(className: string): CustomElementDoc {
-    return this.classes.get(className);
-  }
-
-  getClasses(){
-    const classes: ClassDoc[] = [];
-    this.loopAllExports((_export) => {
-      if (h.isClass(_export)) {
-        classes.push(_export as ClassDoc);
-      }
-    });
-    return classes;
-  }
-
-  getMixins(){
+  private initMixins() {
     let foundMixins = new Map();
 
     let _mixins: Reference[] = [];
@@ -81,7 +66,39 @@ export class CustomElementsJson {
       }
     });
 
-    return [...new Set([..._mixins])];
+    [...new Set([..._mixins])].forEach((mixin) => {
+      this.mixins.set(mixin.name, mixin);
+    });
+  }
+
+  private init() {
+    this.initClasses();
+    this.initDefinitions();
+    this.initMixins();
+  }
+
+  getByTagName(tagName: string): CustomElementDoc {
+    return this.tagNames.get(tagName);
+  }
+
+  getByClassName(className: string): CustomElementDoc {
+    return this.classes.get(className);
+  }
+
+  getClasses(){
+    const classes = [];
+    for(let[key, val] of this.classes) {
+      classes.push(val);
+    }
+    return classes;
+  }
+
+  getMixins(){
+    const mixins = [];
+    for(let[key, val] of this.mixins) {
+      mixins.push(val);
+    }
+    return mixins;
   }
 
   getDefinitions(){
@@ -93,6 +110,44 @@ export class CustomElementsJson {
     });
     return definitions;
   }
+
+  getInheritanceTree(className: string) {
+    const tree: ClassDoc[] = [];
+
+    let klass = this.classes.get(className);
+
+    if(klass) {
+      tree.push(klass);
+
+      if(h.hasMixins(klass)) {
+        klass.mixins.forEach((mixin: VariableDoc) => {
+          tree.push(this.mixins.get(mixin.name));
+        });
+      }
+
+      while(this.classes.has(klass.superclass.name)) {
+        const newKlass = this.classes.get(klass.superclass.name)
+
+        if(h.hasMixins(newKlass)) {
+          newKlass.mixins.forEach((mixin: VariableDoc) => {
+            tree.push(this.mixins.get(mixin.name));
+          });
+        }
+
+        tree.push(newKlass);
+        klass = newKlass;
+      }
+
+      return tree;
+    } else {
+      return [];
+    }
+  }
 }
+
+const json = require('../fixtures/inheritance/superclasses_and_mixins/custom-elements.json');
+const customElementsJson = new CustomElementsJson(json);
+console.log(customElementsJson.getInheritanceTree('MyComponent'));
+
 
 export * from './helpers';
