@@ -77,7 +77,8 @@
   "exports": {
     ".": {
       "import": "./index.mjs",
-      "require": "./dist/index.js"
+      "require": "./dist/index.js",
+      "browser": "./dist/esm/index.js"
     }
   },
   "prettier": {
