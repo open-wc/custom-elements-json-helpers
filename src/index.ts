@@ -145,9 +145,4 @@ export class CustomElementsJson {
   }
 }
 
-const json = require('../fixtures/inheritance/superclasses_and_mixins/custom-elements.json');
-const customElementsJson = new CustomElementsJson(json);
-console.log(customElementsJson.getInheritanceTree('MyComponent'));
-
-
 export * from './helpers';
